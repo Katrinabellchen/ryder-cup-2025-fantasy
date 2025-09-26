@@ -51,7 +51,7 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        .form-control input, .form-control select {
+        .form-control input, .form-control select, .form-control textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -209,6 +209,7 @@
             <p><strong>Friday:</strong> <span id="day-winner-friday-display"></span></p>
             <p><strong>Saturday:</strong> <span id="day-winner-saturday-display"></span></p>
             <p><strong>Sunday:</strong> <span id="day-winner-sunday-display"></span></p>
+            <button class="submit-btn" style="background-color: #2ecc71;" onclick="renderLeaderboard()">Refresh Scores</button>
         </div>
 
         <div id="admin-panel" class="hide">
@@ -272,14 +273,15 @@
 
     </div>
 
-    <script src="fantasy_data.js"></script>
+    <script src="fantasy_data.js"></script> 
+
     <script>
         // --- Global Variables (Simulating Storage) ---
-        // In a real deployed app, this would be an AJAX call to load the JSON file.
-        // For this demo, we use the variables defined in fantasy_data.js
+        // These rely on LEAGUE_DATA being loaded from fantasy_data.js
         
         let currentUserName = null;
-        const COMMISSIONER_CODE = LEAGUE_DATA.leagueCode + '-ADMIN'; // A secret admin code
+        let currentTeam = null; // Store the current player's team object for easy access
+        const COMMISSIONER_CODE = LEAGUE_DATA.leagueCode + '-ADMIN'; // The secret admin code
 
         // --- Utility Functions ---
         
@@ -308,7 +310,415 @@
             return PLAYERS.find(p => p.id === id);
         }
 
-        // -- (The rest of your JavaScript functions will follow here)
+        // --- Core Login Logic (The missing part!) ---
+
+        function handleLogin() {
+            const userName = document.getElementById('login-name').value.trim();
+            const leagueCode = document.getElementById('league-code').value;
+            const errorElement = document.getElementById('login-error');
+
+            errorElement.textContent = ''; // Clear previous errors
+
+            if (!userName) {
+                errorElement.textContent = 'Please enter a login name.';
+                return;
+            }
+
+            // Check for standard player login
+            if (leagueCode === LEAGUE_DATA.leagueCode) {
+                currentUserName = userName;
+                loginSuccess(false); // Not admin
+            } 
+            // Check for admin login
+            else if (leagueCode === COMMISSIONER_CODE) {
+                currentUserName = 'Commissioner'; 
+                loginSuccess(true); // Is admin
+            } 
+            // Failed login
+            else {
+                errorElement.textContent = 'Invalid League Code.';
+            }
+        }
+
+        function loginSuccess(isAdmin) {
+            document.getElementById('login-screen').classList.add('hide');
+            document.getElementById('main-view').classList.add('hide');
+            document.getElementById('setup-screen').classList.add('hide');
+            document.getElementById('admin-panel').classList.add('hide');
+
+            if (isAdmin) {
+                document.getElementById('admin-panel').classList.remove('hide');
+                return;
+            }
+
+            // Find the existing team (case-insensitive)
+            const existingTeam = LEAGUE_DATA.fantasyTeams.find(t => t.name.toLowerCase() === currentUserName.toLowerCase());
+            currentTeam = existingTeam; // Set the global team variable
+
+            if (existingTeam) {
+                // User has already set up a team, show main view
+                renderMainView(existingTeam);
+            } else {
+                // New user, show setup screen
+                renderSetupScreen();
+            }
+        }
+        
+        // --- Setup Screen Logic ---
+
+        function renderSetupScreen() {
+            document.getElementById('setup-user-name').textContent = currentUserName;
+            document.getElementById('setup-screen').classList.remove('hide');
+
+            // 1. Populate Day Winner Selects 
+            const dayWinners = ['day-winner-friday', 'day-winner-saturday', 'day-winner-sunday'];
+            const teamPicks = [{id: 'USA', name: 'USA'}, {id: 'EUR', name: 'Europe'}];
+            
+            dayWinners.forEach(selectId => {
+                const select = document.getElementById(selectId);
+                // Preserve existing selection if set, otherwise reset
+                const currentValue = select.value; 
+                select.innerHTML = '<option value="">-- Select Winner --</option>'; 
+                teamPicks.forEach(team => {
+                    const option = document.createElement('option');
+                    option.value = team.id;
+                    option.textContent = team.name;
+                    select.appendChild(option);
+                });
+                select.value = currentValue; // Restore value if possible
+            });
+
+
+            // 2. Populate Player Selection Checkboxes
+            const selectionList = document.getElementById('player-selection-list');
+            selectionList.innerHTML = ''; 
+
+            PLAYERS.forEach(player => {
+                const div = document.createElement('div');
+                div.className = 'form-control';
+                div.style.display = 'flex';
+                div.style.alignItems = 'center';
+                div.style.marginBottom = '5px';
+                
+                const teamClass = player.team === 'USA' ? 'usa-color' : 'eur-color';
+                
+                // Note: We use the player's ID for the checkbox value
+                div.innerHTML = `
+                    <input type="checkbox" id="player-${player.id}" value="${player.id}" onchange="updateRosterSelection()" style="width: auto; margin-right: 10px;">
+                    <label for="player-${player.id}" style="margin-bottom: 0; display: inline; font-weight: normal; color: ${teamClass};">
+                        ${player.name} (${player.team})
+                    </label>
+                `;
+                selectionList.appendChild(div);
+            });
+        }
+        
+        // This function enforces the limit of 5 players
+        function updateRosterSelection() {
+            const checkboxes = document.querySelectorAll('#player-selection-list input[type="checkbox"]');
+            let checkedCount = 0;
+            let lastCheckedBox = null;
+            
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    checkedCount++;
+                    lastCheckedBox = cb; // Keep track of the last one checked
+                }
+            });
+
+            if (checkedCount > 5) {
+                document.getElementById('setup-error').textContent = 'You can only select a maximum of 5 players.';
+                // Uncheck the last one selected to enforce the limit
+                if (lastCheckedBox) {
+                    lastCheckedBox.checked = false;
+                }
+            } else {
+                document.getElementById('setup-error').textContent = '';
+            }
+        }
+        
+        function saveTeamSetup() {
+            const errorElement = document.getElementById('setup-error');
+            errorElement.textContent = '';
+            
+            const overallPick = document.getElementById('overall-pick').value;
+            const rosterCheckboxes = document.querySelectorAll('#player-selection-list input[type="checkbox"]:checked');
+            const dayWinners = {
+                'Friday': document.getElementById('day-winner-friday').value,
+                'Saturday': document.getElementById('day-winner-saturday').value,
+                'Sunday': document.getElementById('day-winner-sunday').value
+            };
+
+            // 1. Validation
+            if (!overallPick) {
+                errorElement.textContent = 'Please select an Overall Winner Pick.';
+                return;
+            }
+            if (rosterCheckboxes.length !== 5) {
+                errorElement.textContent = `You must select exactly 5 players. You currently have ${rosterCheckboxes.length} selected.`;
+                return;
+            }
+            if (!dayWinners.Friday || !dayWinners.Saturday || !dayWinners.Sunday) {
+                errorElement.textContent = 'Please select a Day Winner for all three days.';
+                return;
+            }
+
+            // 2. Build new team object
+            const newTeam = {
+                name: currentUserName,
+                overallPick: overallPick,
+                roster: Array.from(rosterCheckboxes).map(cb => cb.value),
+                dayWinners: dayWinners,
+                totalPoints: 0
+            };
+
+            // 3. Save to LEAGUE_DATA
+            // Check if user is replacing an old team (if they somehow got back here)
+            const existingIndex = LEAGUE_DATA.fantasyTeams.findIndex(t => t.name.toLowerCase() === currentUserName.toLowerCase());
+            
+            if (existingIndex !== -1) {
+                LEAGUE_DATA.fantasyTeams[existingIndex] = newTeam;
+            } else {
+                LEAGUE_DATA.fantasyTeams.push(newTeam);
+            }
+            
+            saveData(); // Save to local storage
+            currentTeam = newTeam; // Update global team reference
+            renderMainView(newTeam); // Move to main view
+        }
+
+        // --- Main View Logic ---
+
+        function renderMainView(team) {
+            document.getElementById('setup-screen').classList.add('hide');
+            document.getElementById('admin-panel').classList.add('hide');
+            document.getElementById('main-view').classList.remove('hide');
+
+            // Update My Team Section
+            document.getElementById('my-team-name').textContent = team.name;
+            document.getElementById('my-overall-pick').textContent = team.overallPick;
+            document.getElementById('day-winner-friday-display').textContent = team.dayWinners.Friday;
+            document.getElementById('day-winner-saturday-display').textContent = team.dayWinners.Saturday;
+            document.getElementById('day-winner-sunday-display').textContent = team.dayWinners.Sunday;
+
+            // Render Roster
+            const rosterList = document.getElementById('my-roster-list');
+            rosterList.innerHTML = '';
+            team.roster.forEach(playerId => {
+                const player = getPlayerById(playerId);
+                if (player) {
+                    const listItem = document.createElement('li');
+                    listItem.className = `player-item player-${player.team.toLowerCase()}`;
+                    listItem.textContent = `${player.name} (${player.team})`;
+                    rosterList.appendChild(listItem);
+                }
+            });
+
+            // Calculate and Render Leaderboard
+            calculateAllScores();
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            const leaderboardDiv = document.getElementById('leaderboard');
+            leaderboardDiv.innerHTML = ''; // Clear previous content
+
+            // Sort teams by points (highest first)
+            const sortedTeams = [...LEAGUE_DATA.fantasyTeams].sort((a, b) => b.totalPoints - a.totalPoints);
+            
+            let html = '<table><thead><tr><th>Rank</th><th>Team Name</th><th>Total Points</th><th>Overall Pick</th></tr></thead><tbody>';
+
+            sortedTeams.forEach((team, index) => {
+                html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${team.name}</td>
+                        <td>${team.totalPoints.toFixed(2)}</td>
+                        <td class="overall-winner-pick">${team.overallPick}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            leaderboardDiv.innerHTML = html;
+        }
+
+        // --- Score Calculation Logic ---
+
+        function calculateAllScores() {
+            // 1. Reset all fantasy team scores
+            LEAGUE_DATA.fantasyTeams.forEach(team => {
+                team.totalPoints = 0;
+            });
+            
+            // 2. Reset player scores on the main PLAYERS list (to display latest stats)
+            PLAYERS.forEach(player => {
+                player.points = LEAGUE_DATA.playerScores[player.id]?.total || 0;
+                player.birdies = LEAGUE_DATA.playerScores[player.id]?.birdies || 0;
+            });
+            
+            // 3. Apply Player Points to Fantasy Teams
+            LEAGUE_DATA.fantasyTeams.forEach(team => {
+                let teamPoints = 0;
+                
+                // Get points for each roster player
+                team.roster.forEach(playerId => {
+                    const playerScores = LEAGUE_DATA.playerScores[playerId];
+                    if (playerScores) {
+                        let playerTotal = playerScores.total;
+                        
+                        // Apply Daily Winner Multiplier
+                        if (team.dayWinners.Friday === getPlayerById(playerId)?.team) {
+                             playerTotal += playerScores.Friday * SCORING_RULES.DAILY_WINNER_MULTIPLIER;
+                        }
+                        if (team.dayWinners.Saturday === getPlayerById(playerId)?.team) {
+                             playerTotal += playerScores.Saturday * SCORING_RULES.DAILY_WINNER_MULTIPLIER;
+                        }
+                        if (team.dayWinners.Sunday === getPlayerById(playerId)?.team) {
+                             playerTotal += playerScores.Sunday * SCORING_RULES.DAILY_WINNER_MULTIPLIER;
+                        }
+
+                        teamPoints += playerTotal;
+                    }
+                });
+
+                // 4. Apply Overall Winner Bonus
+                if (LEAGUE_DATA.overallWinner && team.overallPick === LEAGUE_DATA.overallWinner) {
+                    teamPoints += SCORING_RULES.OVERALL_WINNER_BONUS;
+                }
+                
+                team.totalPoints = teamPoints;
+            });
+
+            saveData(); // Save the new scores
+        }
+        
+        // --- Admin Logic ---
+
+        function showHideAdmin() {
+            const area = document.getElementById('admin-input-area');
+            area.classList.toggle('hide');
+        }
+
+        function submitMatchResult() {
+            const day = document.getElementById('match-day-select').value;
+            const winner = document.getElementById('match-winner-select').value;
+            const margin = document.getElementById('match-margin-select').value;
+            const playerIdsInput = document.getElementById('player-ids-input').value;
+            const totalBirdies = parseInt(document.getElementById('total-birdies-input').value) || 0;
+            
+            if (!playerIdsInput) {
+                alert('Please enter player IDs.');
+                return;
+            }
+
+            const playerIDs = playerIdsInput.split(',').map(id => id.trim()).filter(id => id);
+            
+            if (playerIDs.length < 2) {
+                alert('Please enter at least two player IDs.');
+                return;
+            }
+
+            // Determine points for match winner/halve
+            let pointsPerPlayer = 0;
+            let isDecisive = margin === '4&3+';
+
+            if (winner === 'TIE') {
+                pointsPerPlayer = (day === 'Sunday' ? SCORING_RULES.SINGLES_MATCH_HALVE : SCORING_RULES.TEAM_MATCH_HALVE);
+            } else {
+                pointsPerPlayer = (day === 'Sunday' ? SCORING_RULES.SINGLES_MATCH_WIN : SCORING_RULES.TEAM_MATCH_WIN);
+                if (isDecisive) {
+                    pointsPerPlayer += SCORING_RULES.DECISIVE_WIN_BONUS;
+                }
+            }
+
+            // Identify winning/losing players (basic logic: all players get points if it's a tie)
+            let winningIDs = [];
+            let losingIDs = [];
+
+            if (winner === 'TIE') {
+                winningIDs = playerIDs;
+            } else {
+                const winningTeam = winner;
+                playerIDs.forEach(id => {
+                    const player = getPlayerById(id);
+                    if (player && player.team === winningTeam) {
+                        winningIDs.push(id);
+                    } else {
+                        losingIDs.push(id);
+                    }
+                });
+            }
+
+            // 1. Update Player Scores
+            winningIDs.forEach(id => {
+                if (LEAGUE_DATA.playerScores[id]) {
+                    LEAGUE_DATA.playerScores[id].total += pointsPerPlayer;
+                    LEAGUE_DATA.playerScores[id][day] += pointsPerPlayer;
+                }
+            });
+
+            // 2. Update Birdie Bonuses
+            // Distribute total birdies evenly among all players involved
+            const birdieBonusPerPlayer = SCORING_RULES.BIRDIE_BONUS;
+            const bonusShare = (totalBirdies * birdieBonusPerPlayer) / playerIDs.length;
+            
+            playerIDs.forEach(id => {
+                 if (LEAGUE_DATA.playerScores[id]) {
+                    LEAGUE_DATA.playerScores[id].total += bonusShare;
+                    LEAGUE_DATA.playerScores[id].birdies += totalBirdies / playerIDs.length; // Approximate share
+                }
+            });
+
+            // 3. Save the Match Result (for history)
+            LEAGUE_DATA.matchResults[day].push({
+                day: day,
+                winner: winner,
+                margin: margin,
+                players: playerIDs,
+                pointsAwarded: pointsPerPlayer
+            });
+
+            // 4. Recalculate and Save
+            calculateAllScores();
+            saveData();
+            
+            alert(`Match result submitted! ${winningIDs.length} player(s) awarded ${pointsPerPlayer.toFixed(2)} points each (Total: ${pointsPerPlayer * winningIDs.length}).`);
+        }
+
+        function setOverallWinner() {
+            const finalWinner = document.getElementById('final-winner-select').value;
+            if (!finalWinner) {
+                alert('Please select the overall winner before finalizing.');
+                return;
+            }
+
+            if (!confirm(`Are you sure you want to set ${finalWinner} as the overall Ryder Cup Winner? This will award the final bonus points.`)) {
+                return;
+            }
+
+            LEAGUE_DATA.overallWinner = finalWinner;
+            calculateAllScores(); // Recalculate to award the final bonus points
+            saveData();
+            alert(`Overall winner set to ${finalWinner}! Final bonus points awarded to all correct fantasy teams.`);
+            renderLeaderboard();
+        }
+
+        // --- Initialization ---
+
+        // Load data on page load
+        loadData(); 
+
+        // If data is present (i.e., you are an existing user), you can auto-login for development:
+        // Uncomment the two lines below for easy development AFTER you've created a team once.
+        /*
+        const firstTeam = LEAGUE_DATA.fantasyTeams[0];
+        if(firstTeam) {
+           currentUserName = firstTeam.name;
+           loginSuccess(false);
+        }
+        */
+
     </script>
 </body>
 </html>
