@@ -3,722 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryder Cup 2025 Fantasy League</title>
+    <title>Fantasy Golf League</title>
     <style>
-        /* CSS Styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        #app {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            text-align: center;
-            color: #00468C; /* USA Blue */
-            border-bottom: 3px solid #FFCD00; /* Europe Yellow */
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .section-title {
-            color: #1A3E5C;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-            margin-top: 25px;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-        /* Login and Setup Form */
-        #login-screen, #setup-screen {
-            text-align: center;
-            padding: 40px 20px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-        .form-control {
-            margin-bottom: 15px;
-        }
-        .form-control label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .form-control input, .form-control select, .form-control textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .submit-btn {
-            background-color: #00468C;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        .submit-btn:hover {
-            background-color: #003366;
-        }
-
-        /* Leaderboard */
-        #leaderboard table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        #leaderboard th, #leaderboard td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        #leaderboard th {
-            background-color: #f0f0f0;
-            color: #333;
-            font-weight: bold;
-        }
-        #leaderboard tr:nth-child(even) {
-            background-color: #fafafa;
-        }
-        .overall-winner-pick {
-            font-weight: bold;
-        }
-        .usa-color { color: #00468C; }
-        .eur-color { color: #FFCD00; }
-
-        /* Team Roster View */
-        .player-list {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .player-item {
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.9em;
-            font-weight: bold;
-            flex: 1 1 45%; /* Allows 2 per row */
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .player-usa { border: 1px solid #00468C; background-color: #e6f0ff; }
-        .player-eur { border: 1px solid #FFCD00; background-color: #fffbe6; }
-
-        /* Admin/Match Input (Hidden by default) */
-        #admin-panel {
-            background-color: #eafaea;
-            border: 1px solid #ccc;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 6px;
-        }
-        #admin-panel label {
-            font-weight: bold;
-        }
-        .admin-result-input {
-            margin-bottom: 10px;
-        }
-        .player-select {
-            padding: 5px;
-            margin: 5px;
-        }
-        .hide {
-            display: none !important;
-        }
+        /* Basic CSS for presentation - you can expand this */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #app-container { max-width: 800px; margin: auto; }
+        .screen { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
+        h2 { border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .form-control { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], select { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .roster-selection { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .player-item { border: 1px solid #ddd; padding: 10px; }
+        .roster-player { display: block; font-weight: normal; }
+        .roster-player:nth-child(odd) { background-color: #f9f9f9; }
+        .roster-player:nth-child(even) { background-color: #fff; }
+        
+        /* Scoreboard Styles */
+        #scoreboard table { width: 100%; border-collapse: collapse; }
+        #scoreboard th, #scoreboard td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        #scoreboard th { background-color: #f2f2f2; }
+        .team-name { font-weight: bold; }
+        .roster-list { list-style: none; padding: 0; margin: 5px 0 0 0; font-size: 0.9em; }
     </style>
+    <script src="fantasy_data.js"></script>
 </head>
 <body>
 
-    <div id="app">
-        <h1>Ryder Cup 2025 Fantasy League</h1>
-        
-        <div id="login-screen">
-            <h2 class="section-title">Welcome to the Fantasy League!</h2>
-            <div class="form-control">
-                <label for="login-name">Your Login Name (e.g., Mike, Sarah):</label>
-                <input type="text" id="login-name" placeholder="Enter your name" required>
-            </div>
-            <div class="form-control">
-                <label for="league-code">League Code:</label>
-                <input type="password" id="league-code" placeholder="Enter the secret code" required>
-            </div>
-            <button class="submit-btn" onclick="handleLogin()">Login / Join League</button>
-            <p id="login-error" style="color: red; margin-top: 10px;"></p>
+<div id="app-container">
+    <h1>Fantasy League</h1>
+
+    <div id="login-screen" class="screen">
+        <h2>Enter Your Name</h2>
+        <div class="form-control">
+            <label for="user-name">Your Name:</label>
+            <input type="text" id="user-name" required>
         </div>
-
-        <div id="setup-screen" class="hide">
-            <h2 class="section-title">Team Setup: <span id="setup-user-name"></span></h2>
-            
-            <div class="form-control">
-                <label for="overall-pick">Overall Winner Pick (Bonus +15 Points):</label>
-                <select id="overall-pick" required>
-                    <option value="">-- Select Winner --</option>
-                    <option value="USA">USA</option>
-                    <option value="EUR">Europe</option>
-                </select>
-            </div>
-
-            <div class="form-control">
-                <label>Select Your 5 Players (Any mix, max 5 total):</label>
-                <div id="player-selection-list" style="max-height: 250px; overflow-y: auto; text-align: left; border: 1px solid #ddd; padding: 10px; border-radius: 4px;">
-                    </div>
-            </div>
-
-            <div class="form-control">
-                <label for="day-winner-friday">Friday Day Winner (Double Points):</label>
-                <select id="day-winner-friday" required>
-                    </select>
-            </div>
-            <div class="form-control">
-                <label for="day-winner-saturday">Saturday Day Winner (Double Points):</label>
-                <select id="day-winner-saturday" required>
-                    </select>
-            </div>
-            <div class="form-control">
-                <label for="day-winner-sunday">Sunday Day Winner (Double Points):</label>
-                <select id="day-winner-sunday" required>
-                    </select>
-            </div>
-            
-            <button class="submit-btn" onclick="saveTeamSetup()">Lock In My Team</button>
-            <p id="setup-error" style="color: red; margin-top: 10px;"></p>
-        </div>
-
-        <div id="main-view" class="hide">
-            <h2 class="section-title">Current Standings</h2>
-            <div id="leaderboard">
-                </div>
-            
-            <h2 class="section-title">My Team (<span id="my-team-name"></span> - Pick: <span id="my-overall-pick" class="overall-winner-pick"></span>)</h2>
-            <ul id="my-roster-list" class="player-list">
-                </ul>
-
-            <h2 class="section-title">Day Winner Selections</h2>
-            <p><strong>Friday:</strong> <span id="day-winner-friday-display"></span></p>
-            <p><strong>Saturday:</strong> <span id="day-winner-saturday-display"></span></p>
-            <p><strong>Sunday:</strong> <span id="day-winner-sunday-display"></span></p>
-            <button class="submit-btn" style="background-color: #2ecc71;" onclick="renderLeaderboard()">Refresh Scores</button>
-        </div>
-
-        <div id="admin-panel" class="hide">
-            <h2 class="section-title" style="color: #c0392b;">Commissioner Panel (Admin)</h2>
-            <button class="submit-btn" style="background-color: #2c3e50;" onclick="showHideAdmin()">Toggle Admin Input</button>
-            
-            <div id="admin-input-area" class="hide" style="padding: 10px; border-top: 1px solid #ccc; margin-top: 10px;">
-                <h3 style="margin-top: 0;">Enter Match Result</h3>
-                
-                <div class="form-control">
-                    <label for="match-day-select">Day:</label>
-                    <select id="match-day-select">
-                        <option value="Friday">Friday</option>
-                        <option value="Saturday">Saturday</option>
-                        <option value="Sunday">Sunday</option>
-                    </select>
-                </div>
-                
-                <div class="form-control">
-                    <label for="match-winner-select">Winning Team:</label>
-                    <select id="match-winner-select">
-                        <option value="USA">USA</option>
-                        <option value="EUR">Europe</option>
-                        <option value="TIE">Halve (Tie)</option>
-                    </select>
-                </div>
-                
-                <div class="form-control">
-                    <label for="match-margin-select">Result Margin (for Decisive Bonus):</label>
-                    <select id="match-margin-select">
-                        <option value="4&3+">4&amp;3 or greater (Decisive +1pt)</option>
-                        <option value="standard">Standard (e.g., 1UP, 2&amp;1, Halve)</option>
-                    </select>
-                </div>
-
-                <div class="form-control">
-                    <label>Players Involved (Input all 4/2 players):</label>
-                    <p style="font-size: 0.8em; color: #555;">Use player IDs from the `fantasy_data.js` file (e.g., 'sscheffler'). Separate IDs with commas.</p>
-                    <textarea id="player-ids-input" rows="3" style="width: 100%;" placeholder="e.g., sscheffler, xschauffele, rmcilroy, jrahm"></textarea>
-                </div>
-
-                <div class="form-control">
-                    <label for="total-birdies-input">Total Birdies/Eagles for Match (Sum of all 4/2 players):</label>
-                    <input type="number" id="total-birdies-input" value="0" min="0">
-                </div>
-                
-                <button class="submit-btn" style="background-color: #c0392b;" onclick="submitMatchResult()">Submit Match Result & Update Scores</button>
-
-                <h3 style="margin-top: 20px;">Final Overall Winner</h3>
-                <div class="form-control">
-                    <label for="final-winner-select">Ryder Cup Winner:</label>
-                    <select id="final-winner-select">
-                        <option value="">-- Not Decided --</option>
-                        <option value="USA">USA</option>
-                        <option value="EUR">Europe</option>
-                    </select>
-                </div>
-                <button class="submit-btn" style="background-color: green;" onclick="setOverallWinner()">Finalize Winner & Award Bonus</button>
-            </div>
-        </div>
-
+        <button onclick="loginUser()">Login / Start Setup</button>
     </div>
 
-    <script src="fantasy_data.js"></script> 
+    <div id="setup-screen" class="screen" style="display:none;">
+        <h2 id="setup-welcome"></h2>
 
-    <script>
-        // --- Global Variables (Simulating Storage) ---
-        // These rely on LEAGUE_DATA being loaded from fantasy_data.js
+        <div class="form-control">
+            <label for="overall-winner">Overall Winner Pick (20 Point Bonus):</label>
+            <select id="overall-winner" required>
+                <option value="">-- Select Team --</option>
+                <option value="USA">USA</option>
+                <option value="EUR">Europe</option>
+            </select>
+        </div>
+
+        <h3>Daily Double Player Picks (Points are doubled for this player on this day)</h3>
+        <div class="form-control">
+            <label for="day-winner-friday">Friday Day Winner (Player):</label>
+            <select id="day-winner-friday" required>
+                </select>
+        </div>
+        <div class="form-control">
+            <label for="day-winner-saturday">Saturday Day Winner (Player):</label>
+            <select id="day-winner-saturday" required>
+                </select>
+        </div>
+        <div class="form-control">
+            <label for="day-winner-sunday">Sunday Day Winner (Player):</label>
+            <select id="day-winner-sunday" required>
+                </select>
+        </div>
+
+        <h3>Roster Selection (Select 8 Players)</h3>
+        <p id="roster-count">Selected: 0/8</p>
+        <div id="roster-selection" class="roster-selection">
+            </div>
+
+        <button onclick="saveTeamSetup()">Save Team & View Scoreboard</button>
+    </div>
+
+    <div id="scoreboard-screen" class="screen" style="display:none;">
+        <h2>Current Standings</h2>
+        <div id="scoreboard">
+            </div>
+    </div>
+</div>
+
+<script>
+    let currentUserName = '';
+
+    function loginUser() {
+        const userNameInput = document.getElementById('user-name').value.trim();
+        if (userNameInput) {
+            currentUserName = userNameInput;
+            document.getElementById('login-screen').style.display = 'none';
+            renderSetupScreen();
+            document.getElementById('setup-screen').style.display = 'block';
+        } else {
+            alert('Please enter your name.');
+        }
+    }
+
+    function renderSetupScreen() {
+        document.getElementById('setup-welcome').textContent = `Setup Team for ${currentUserName}`;
+
+        // --- 1. Populate Day Winner Selects (Player-Based) ---
+        const dayWinners = ['day-winner-friday', 'day-winner-saturday', 'day-winner-sunday'];
         
-        let currentUserName = null;
-        let currentTeam = null; // Store the current player's team object for easy access
-        const COMMISSIONER_CODE = LEAGUE_DATA.leagueCode + '-ADMIN'; // The secret admin code
-
-        // --- Utility Functions ---
-        
-        /** Simulates saving/loading the LEAGUE_DATA object to "storage" (localStorage) */
-        function saveData() {
-            localStorage.setItem('fantasyLeagueData', JSON.stringify(LEAGUE_DATA));
-        }
-
-        function loadData() {
-            const savedData = localStorage.getItem('fantasyLeagueData');
-            if (savedData) {
-                // Merge loaded data over the initial structure
-                Object.assign(LEAGUE_DATA, JSON.parse(savedData));
-                
-                // Re-initialize playerScores in case a new player was added to PLAYERS array
-                for (const player of PLAYERS) {
-                    if (!LEAGUE_DATA.playerScores[player.id]) {
-                        LEAGUE_DATA.playerScores[player.id] = { total: 0, Friday: 0, Saturday: 0, Sunday: 0, birdies: 0 };
-                    }
-                }
-            }
-        }
-        
-        /** Gets a player object by their ID */
-        function getPlayerById(id) {
-            return PLAYERS.find(p => p.id === id);
-        }
-
-        // --- Core Login Logic (The missing part!) ---
-
-        function handleLogin() {
-            const userName = document.getElementById('login-name').value.trim();
-            const leagueCode = document.getElementById('league-code').value;
-            const errorElement = document.getElementById('login-error');
-
-            errorElement.textContent = ''; // Clear previous errors
-
-            if (!userName) {
-                errorElement.textContent = 'Please enter a login name.';
-                return;
-            }
-
-            // Check for standard player login
-            if (leagueCode === LEAGUE_DATA.leagueCode) {
-                currentUserName = userName;
-                loginSuccess(false); // Not admin
-            } 
-            // Check for admin login
-            else if (leagueCode === COMMISSIONER_CODE) {
-                currentUserName = 'Commissioner'; 
-                loginSuccess(true); // Is admin
-            } 
-            // Failed login
-            else {
-                errorElement.textContent = 'Invalid League Code.';
-            }
-        }
-
-        function loginSuccess(isAdmin) {
-            document.getElementById('login-screen').classList.add('hide');
-            document.getElementById('main-view').classList.add('hide');
-            document.getElementById('setup-screen').classList.add('hide');
-            document.getElementById('admin-panel').classList.add('hide');
-
-            if (isAdmin) {
-                document.getElementById('admin-panel').classList.remove('hide');
-                return;
-            }
-
-            // Find the existing team (case-insensitive)
-            const existingTeam = LEAGUE_DATA.fantasyTeams.find(t => t.name.toLowerCase() === currentUserName.toLowerCase());
-            currentTeam = existingTeam; // Set the global team variable
-
-            if (existingTeam) {
-                // User has already set up a team, show main view
-                renderMainView(existingTeam);
-            } else {
-                // New user, show setup screen
-                renderSetupScreen();
-            }
-        }
-        
-        // --- Setup Screen Logic ---
-
-        function renderSetupScreen() {
-            document.getElementById('setup-user-name').textContent = currentUserName;
-            document.getElementById('setup-screen').classList.remove('hide');
-
-            // 1. Populate Day Winner Selects 
-            const dayWinners = ['day-winner-friday', 'day-winner-saturday', 'day-winner-sunday'];
-            const teamPicks = [{id: 'USA', name: 'USA'}, {id: 'EUR', name: 'Europe'}];
+        dayWinners.forEach(selectId => {
+            const select = document.getElementById(selectId);
+            const currentValue = select.value; 
+            select.innerHTML = '<option value="">-- Select Player --</option>'; 
             
-            dayWinners.forEach(selectId => {
-                const select = document.getElementById(selectId);
-                // Preserve existing selection if set, otherwise reset
-                const currentValue = select.value; 
-                select.innerHTML = '<option value="">-- Select Winner --</option>'; 
-                teamPicks.forEach(team => {
-                    const option = document.createElement('option');
-                    option.value = team.id;
-                    option.textContent = team.name;
-                    select.appendChild(option);
-                });
-                select.value = currentValue; // Restore value if possible
-            });
-
-
-            // 2. Populate Player Selection Checkboxes
-            const selectionList = document.getElementById('player-selection-list');
-            selectionList.innerHTML = ''; 
-
-            PLAYERS.forEach(player => {
-                const div = document.createElement('div');
-                div.className = 'form-control';
-                div.style.display = 'flex';
-                div.style.alignItems = 'center';
-                div.style.marginBottom = '5px';
-                
-                const teamClass = player.team === 'USA' ? 'usa-color' : 'eur-color';
-                
-                // Note: We use the player's ID for the checkbox value
-                div.innerHTML = `
-                    <input type="checkbox" id="player-${player.id}" value="${player.id}" onchange="updateRosterSelection()" style="width: auto; margin-right: 10px;">
-                    <label for="player-${player.id}" style="margin-bottom: 0; display: inline; font-weight: normal; color: ${teamClass};">
-                        ${player.name} (${player.team})
-                    </label>
-                `;
-                selectionList.appendChild(div);
-            });
-        }
-        
-        // This function enforces the limit of 5 players
-        function updateRosterSelection() {
-            const checkboxes = document.querySelectorAll('#player-selection-list input[type="checkbox"]');
-            let checkedCount = 0;
-            let lastCheckedBox = null;
+            // Combine and sort players alphabetically
+            const sortedPlayers = [...PLAYERS].sort((a, b) => a.name.localeCompare(b.name));
             
+            sortedPlayers.forEach(player => {
+                const option = document.createElement('option');
+                // The value is the player's ID, the text is their name and team
+                option.value = player.id; 
+                option.textContent = `${player.name} (${player.team})`;
+                select.appendChild(option);
+            });
+            select.value = currentValue; 
+        });
+
+        // --- 2. Populate Roster Selection Checkboxes (All 24 Players) ---
+        const rosterDiv = document.getElementById('roster-selection');
+        rosterDiv.innerHTML = ''; // Clear previous content
+
+        // Sort players by Team (USA/EUR) then alphabetically
+        const sortedRoster = [...PLAYERS].sort((a, b) => {
+            if (a.team !== b.team) {
+                return a.team.localeCompare(b.team);
+            }
+            return a.name.localeCompare(b.name);
+        });
+
+        sortedRoster.forEach(player => {
+            const playerItem = document.createElement('label');
+            playerItem.className = 'roster-player';
+            playerItem.innerHTML = `
+                <input type="checkbox" name="roster" value="${player.id}" onchange="updateRosterCount()">
+                ${player.name} (${player.team})
+            `;
+            rosterDiv.appendChild(playerItem);
+        });
+
+        updateRosterCount(); // Initial count update
+    }
+
+    function updateRosterCount() {
+        const selectedCount = document.querySelectorAll('#roster-selection input:checked').length;
+        document.getElementById('roster-count').textContent = `Selected: ${selectedCount}/8`;
+
+        // Disable/Enable logic
+        const checkboxes = document.querySelectorAll('#roster-selection input[type="checkbox"]');
+        if (selectedCount >= 8) {
             checkboxes.forEach(cb => {
-                if (cb.checked) {
-                    checkedCount++;
-                    lastCheckedBox = cb; // Keep track of the last one checked
+                if (!cb.checked) {
+                    cb.disabled = true;
                 }
             });
-
-            if (checkedCount > 5) {
-                document.getElementById('setup-error').textContent = 'You can only select a maximum of 5 players.';
-                // Uncheck the last one selected to enforce the limit
-                if (lastCheckedBox) {
-                    lastCheckedBox.checked = false;
-                }
-            } else {
-                document.getElementById('setup-error').textContent = '';
-            }
+        } else {
+            checkboxes.forEach(cb => {
+                cb.disabled = false;
+            });
         }
+    }
+
+    function saveTeamSetup() {
+        const overallPick = document.getElementById('overall-winner').value;
+        const fridayPick = document.getElementById('day-winner-friday').value;
+        const saturdayPick = document.getElementById('day-winner-saturday').value;
+        const sundayPick = document.getElementById('day-winner-sunday').value;
+        const rosterCheckboxes = document.querySelectorAll('#roster-selection input:checked');
+
+        // Validation
+        if (!overallPick || !fridayPick || !saturdayPick || !sundayPick) {
+            alert('Please make a selection for Overall Winner and all three Daily Double Players.');
+            return;
+        }
+
+        if (rosterCheckboxes.length !== 8) {
+            alert('You must select exactly 8 players for your roster.');
+            return;
+        }
+
+        const dayWinners = {
+            'Friday': fridayPick,   // Now stores Player ID
+            'Saturday': saturdayPick, // Player ID
+            'Sunday': sundayPick      // Player ID
+        };
+
+        // Check for duplicate player picks in Daily Doubles
+        const dailyPicks = Object.values(dayWinners);
+        const uniquePicks = new Set(dailyPicks);
+        if (uniquePicks.size !== dailyPicks.length) {
+            alert('A player cannot be selected as the Daily Double Player for more than one day.');
+            return;
+        }
+
+        // Build new team object
+        const newTeam = {
+            name: currentUserName,
+            overallPick: overallPick,
+            roster: Array.from(rosterCheckboxes).map(cb => cb.value),
+            dayWinners: dayWinners, 
+            totalPoints: 0
+        };
+
+        // Add to LEAGUE_DATA or update existing
+        const existingIndex = LEAGUE_DATA.fantasyTeams.findIndex(t => t.name === currentUserName);
+        if (existingIndex !== -1) {
+            LEAGUE_DATA.fantasyTeams[existingIndex] = newTeam;
+        } else {
+            LEAGUE_DATA.fantasyTeams.push(newTeam);
+        }
+
+        // Switch to scoreboard
+        document.getElementById('setup-screen').style.display = 'none';
+        document.getElementById('scoreboard-screen').style.display = 'block';
         
-        function saveTeamSetup() {
-            const errorElement = document.getElementById('setup-error');
-            errorElement.textContent = '';
-            
-            const overallPick = document.getElementById('overall-pick').value;
-            const rosterCheckboxes = document.querySelectorAll('#player-selection-list input[type="checkbox"]:checked');
-            const dayWinners = {
-                'Friday': document.getElementById('day-winner-friday').value,
-                'Saturday': document.getElementById('day-winner-saturday').value,
-                'Sunday': document.getElementById('day-winner-sunday').value
-            };
+        calculateAndRenderScoreboard();
+    }
 
-            // 1. Validation
-            if (!overallPick) {
-                errorElement.textContent = 'Please select an Overall Winner Pick.';
-                return;
-            }
-            if (rosterCheckboxes.length !== 5) {
-                errorElement.textContent = `You must select exactly 5 players. You currently have ${rosterCheckboxes.length} selected.`;
-                return;
-            }
-            if (!dayWinners.Friday || !dayWinners.Saturday || !dayWinners.Sunday) {
-                errorElement.textContent = 'Please select a Day Winner for all three days.';
-                return;
-            }
-
-            // 2. Build new team object
-            const newTeam = {
-                name: currentUserName,
-                overallPick: overallPick,
-                roster: Array.from(rosterCheckboxes).map(cb => cb.value),
-                dayWinners: dayWinners,
-                totalPoints: 0
-            };
-
-            // 3. Save to LEAGUE_DATA
-            // Check if user is replacing an old team (if they somehow got back here)
-            const existingIndex = LEAGUE_DATA.fantasyTeams.findIndex(t => t.name.toLowerCase() === currentUserName.toLowerCase());
-            
-            if (existingIndex !== -1) {
-                LEAGUE_DATA.fantasyTeams[existingIndex] = newTeam;
-            } else {
-                LEAGUE_DATA.fantasyTeams.push(newTeam);
-            }
-            
-            saveData(); // Save to local storage
-            currentTeam = newTeam; // Update global team reference
-            renderMainView(newTeam); // Move to main view
+    function calculateAllScores() {
+        // 1. Determine Actual Overall Winner
+        const totalUSA = Object.values(LEAGUE_DATA.matchScores.USA).reduce((a, b) => a + b, 0);
+        const totalEUR = Object.values(LEAGUE_DATA.matchScores.EUR).reduce((a, b) => a + b, 0);
+        
+        let actualOverallWinner = 'TIE';
+        if (totalUSA > totalEUR) {
+            actualOverallWinner = 'USA';
+        } else if (totalEUR > totalUSA) {
+            actualOverallWinner = 'EUR';
         }
 
-        // --- Main View Logic ---
-
-        function renderMainView(team) {
-            document.getElementById('setup-screen').classList.add('hide');
-            document.getElementById('admin-panel').classList.add('hide');
-            document.getElementById('main-view').classList.remove('hide');
-
-            // Update My Team Section
-            document.getElementById('my-team-name').textContent = team.name;
-            document.getElementById('my-overall-pick').textContent = team.overallPick;
-            document.getElementById('day-winner-friday-display').textContent = team.dayWinners.Friday;
-            document.getElementById('day-winner-saturday-display').textContent = team.dayWinners.Saturday;
-            document.getElementById('day-winner-sunday-display').textContent = team.dayWinners.Sunday;
-
-            // Render Roster
-            const rosterList = document.getElementById('my-roster-list');
-            rosterList.innerHTML = '';
+        // 2. Clear previous scores
+        LEAGUE_DATA.fantasyTeams.forEach(team => {
+            team.totalPoints = 0;
+            team.bonusPoints = 0; // Initialize bonus points for display
+        });
+        
+        // 3. Apply Player Points to Fantasy Teams
+        LEAGUE_DATA.fantasyTeams.forEach(team => {
+            let teamPoints = 0;
+            
+            // Get points for each roster player
             team.roster.forEach(playerId => {
-                const player = getPlayerById(playerId);
-                if (player) {
-                    const listItem = document.createElement('li');
-                    listItem.className = `player-item player-${player.team.toLowerCase()}`;
-                    listItem.textContent = `${player.name} (${player.team})`;
-                    rosterList.appendChild(listItem);
-                }
-            });
-
-            // Calculate and Render Leaderboard
-            calculateAllScores();
-            renderLeaderboard();
-        }
-
-        function renderLeaderboard() {
-            const leaderboardDiv = document.getElementById('leaderboard');
-            leaderboardDiv.innerHTML = ''; // Clear previous content
-
-            // Sort teams by points (highest first)
-            const sortedTeams = [...LEAGUE_DATA.fantasyTeams].sort((a, b) => b.totalPoints - a.totalPoints);
-            
-            let html = '<table><thead><tr><th>Rank</th><th>Team Name</th><th>Total Points</th><th>Overall Pick</th></tr></thead><tbody>';
-
-            sortedTeams.forEach((team, index) => {
-                html += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${team.name}</td>
-                        <td>${team.totalPoints.toFixed(2)}</td>
-                        <td class="overall-winner-pick">${team.overallPick}</td>
-                    </tr>
-                `;
-            });
-            
-            html += '</tbody></table>';
-            leaderboardDiv.innerHTML = html;
-        }
-
-        // --- Score Calculation Logic ---
-
-        function calculateAllScores() {
-            // 1. Reset all fantasy team scores
-            LEAGUE_DATA.fantasyTeams.forEach(team => {
-                team.totalPoints = 0;
-            });
-            
-            // 2. Reset player scores on the main PLAYERS list (to display latest stats)
-            PLAYERS.forEach(player => {
-                player.points = LEAGUE_DATA.playerScores[player.id]?.total || 0;
-                player.birdies = LEAGUE_DATA.playerScores[player.id]?.birdies || 0;
-            });
-            
-            // 3. Apply Player Points to Fantasy Teams
-            LEAGUE_DATA.fantasyTeams.forEach(team => {
-                let teamPoints = 0;
-                
-                // Get points for each roster player
-                team.roster.forEach(playerId => {
-                    const playerScores = LEAGUE_DATA.playerScores[playerId];
-                    if (playerScores) {
-                        let playerTotal = playerScores.total;
-                        
-                        // Apply Daily Winner Multiplier
-                        if (team.dayWinners.Friday === getPlayerById(playerId)?.team) {
-                             playerTotal += playerScores.Friday * SCORING_RULES.DAILY_WINNER_MULTIPLIER;
-                        }
-                        if (team.dayWinners.Saturday === getPlayerById(playerId)?.team) {
-                             playerTotal += playerScores.Saturday * SCORING_RULES.DAILY_WINNER_MULTIPLIER;
-                        }
-                        if (team.dayWinners.Sunday === getPlayerById(playerId)?.team) {
-                             playerTotal += playerScores.Sunday * SCORING_RULES.DAILY_WINNER_MULTIPLIER;
-                        }
-
-                        teamPoints += playerTotal;
+                const playerScores = LEAGUE_DATA.playerScores[playerId];
+                if (playerScores) {
+                    let playerTotal = playerScores.total;
+                    
+                    // --- Apply Player Day Winner Multiplier ---
+                    
+                    // Check Friday
+                    if (team.dayWinners.Friday === playerId) {
+                         // Double the points scored by *this player* on *Friday*
+                         playerTotal += playerScores.Friday; 
                     }
-                });
-
-                // 4. Apply Overall Winner Bonus
-                if (LEAGUE_DATA.overallWinner && team.overallPick === LEAGUE_DATA.overallWinner) {
-                    teamPoints += SCORING_RULES.OVERALL_WINNER_BONUS;
+                    // Check Saturday
+                    if (team.dayWinners.Saturday === playerId) {
+                         playerTotal += playerScores.Saturday; 
+                    }
+                    // Check Sunday
+                    if (team.dayWinners.Sunday === playerId) {
+                         playerTotal += playerScores.Sunday; 
+                    }
+                    
+                    teamPoints += playerTotal;
                 }
-                
-                team.totalPoints = teamPoints;
             });
 
-            saveData(); // Save the new scores
-        }
+            // 4. Apply Overall Winner Bonus
+            let bonusPoints = 0;
+            if (team.overallPick === actualOverallWinner) {
+                bonusPoints = SCORING_RULES.overallWinnerBonus;
+            }
+
+            team.totalPoints = teamPoints + bonusPoints;
+            team.bonusPoints = bonusPoints; // Store bonus points separately for display
+        });
+
+        // 5. Sort teams by total points (descending)
+        LEAGUE_DATA.fantasyTeams.sort((a, b) => b.totalPoints - a.totalPoints);
+    }
+
+    function calculateAndRenderScoreboard() {
+        calculateAllScores();
         
-        // --- Admin Logic ---
+        const scoreboardDiv = document.getElementById('scoreboard');
+        let html = '<table>';
+        html += '<thead><tr><th>Rank</th><th>Fantasy Team</th><th>Player Points</th><th>Bonus Points</th><th>Total Points</th></tr></thead>';
+        html += '<tbody>';
+        
+        LEAGUE_DATA.fantasyTeams.forEach((team, index) => {
+            // Find player names for Day Winners
+            const getPlayerName = (id) => PLAYERS.find(p => p.id === id)?.name || id;
 
-        function showHideAdmin() {
-            const area = document.getElementById('admin-input-area');
-            area.classList.toggle('hide');
-        }
+            html += `<tr>`;
+            html += `<td>${index + 1}</td>`;
+            html += `<td class="team-name">${team.name}<br>
+                         <ul class="roster-list">
+                             <li>Pick: ${team.overallPick}</li>
+                             <li>Fri Double: ${getPlayerName(team.dayWinners.Friday)}</li>
+                             <li>Sat Double: ${getPlayerName(team.dayWinners.Saturday)}</li>
+                             <li>Sun Double: ${getPlayerName(team.dayWinners.Sunday)}</li>
+                         </ul>
+                     </td>`;
+            html += `<td>${team.totalPoints - team.bonusPoints}</td>`; // Player Points only
+            html += `<td>${team.bonusPoints}</td>`; // Bonus Points
+            html += `<td><strong>${team.totalPoints}</strong></td>`;
+            html += `</tr>`;
+        });
 
-        function submitMatchResult() {
-            const day = document.getElementById('match-day-select').value;
-            const winner = document.getElementById('match-winner-select').value;
-            const margin = document.getElementById('match-margin-select').value;
-            const playerIdsInput = document.getElementById('player-ids-input').value;
-            const totalBirdies = parseInt(document.getElementById('total-birdies-input').value) || 0;
-            
-            if (!playerIdsInput) {
-                alert('Please enter player IDs.');
-                return;
-            }
+        html += '</tbody></table>';
+        
+        // Add actual match score summary (unchanged)
+        const totalUSA = Object.values(LEAGUE_DATA.matchScores.USA).reduce((a, b) => a + b, 0);
+        const totalEUR = Object.values(LEAGUE_DATA.matchScores.EUR).reduce((a, b) => a + b, 0);
+        const actualWinner = totalUSA > totalEUR ? 'USA' : totalEUR > totalUSA ? 'Europe' : 'TIE';
 
-            const playerIDs = playerIdsInput.split(',').map(id => id.trim()).filter(id => id);
-            
-            if (playerIDs.length < 2) {
-                alert('Please enter at least two player IDs.');
-                return;
-            }
+        html += `<h3>Match Score: USA ${totalUSA} - ${totalEUR} Europe (Winner: ${actualWinner})</h3>`;
+        html += `<p>This scoreboard is based on the data in <code>fantasy_data.js</code>.</p>`;
+        
+        scoreboardDiv.innerHTML = html;
+    }
 
-            // Determine points for match winner/halve
-            let pointsPerPlayer = 0;
-            let isDecisive = margin === '4&3+';
+    // Initial check (if a user is already "logged in" by refreshing)
+    if (currentUserName) {
+        renderSetupScreen();
+    }
+</script>
 
-            if (winner === 'TIE') {
-                pointsPerPlayer = (day === 'Sunday' ? SCORING_RULES.SINGLES_MATCH_HALVE : SCORING_RULES.TEAM_MATCH_HALVE);
-            } else {
-                pointsPerPlayer = (day === 'Sunday' ? SCORING_RULES.SINGLES_MATCH_WIN : SCORING_RULES.TEAM_MATCH_WIN);
-                if (isDecisive) {
-                    pointsPerPlayer += SCORING_RULES.DECISIVE_WIN_BONUS;
-                }
-            }
-
-            // Identify winning/losing players (basic logic: all players get points if it's a tie)
-            let winningIDs = [];
-            let losingIDs = [];
-
-            if (winner === 'TIE') {
-                winningIDs = playerIDs;
-            } else {
-                const winningTeam = winner;
-                playerIDs.forEach(id => {
-                    const player = getPlayerById(id);
-                    if (player && player.team === winningTeam) {
-                        winningIDs.push(id);
-                    } else {
-                        losingIDs.push(id);
-                    }
-                });
-            }
-
-            // 1. Update Player Scores
-            winningIDs.forEach(id => {
-                if (LEAGUE_DATA.playerScores[id]) {
-                    LEAGUE_DATA.playerScores[id].total += pointsPerPlayer;
-                    LEAGUE_DATA.playerScores[id][day] += pointsPerPlayer;
-                }
-            });
-
-            // 2. Update Birdie Bonuses
-            // Distribute total birdies evenly among all players involved
-            const birdieBonusPerPlayer = SCORING_RULES.BIRDIE_BONUS;
-            const bonusShare = (totalBirdies * birdieBonusPerPlayer) / playerIDs.length;
-            
-            playerIDs.forEach(id => {
-                 if (LEAGUE_DATA.playerScores[id]) {
-                    LEAGUE_DATA.playerScores[id].total += bonusShare;
-                    LEAGUE_DATA.playerScores[id].birdies += totalBirdies / playerIDs.length; // Approximate share
-                }
-            });
-
-            // 3. Save the Match Result (for history)
-            LEAGUE_DATA.matchResults[day].push({
-                day: day,
-                winner: winner,
-                margin: margin,
-                players: playerIDs,
-                pointsAwarded: pointsPerPlayer
-            });
-
-            // 4. Recalculate and Save
-            calculateAllScores();
-            saveData();
-            
-            alert(`Match result submitted! ${winningIDs.length} player(s) awarded ${pointsPerPlayer.toFixed(2)} points each (Total: ${pointsPerPlayer * winningIDs.length}).`);
-        }
-
-        function setOverallWinner() {
-            const finalWinner = document.getElementById('final-winner-select').value;
-            if (!finalWinner) {
-                alert('Please select the overall winner before finalizing.');
-                return;
-            }
-
-            if (!confirm(`Are you sure you want to set ${finalWinner} as the overall Ryder Cup Winner? This will award the final bonus points.`)) {
-                return;
-            }
-
-            LEAGUE_DATA.overallWinner = finalWinner;
-            calculateAllScores(); // Recalculate to award the final bonus points
-            saveData();
-            alert(`Overall winner set to ${finalWinner}! Final bonus points awarded to all correct fantasy teams.`);
-            renderLeaderboard();
-        }
-
-        // --- Initialization ---
-
-        // Load data on page load
-        loadData(); 
-
-        // If data is present (i.e., you are an existing user), you can auto-login for development:
-        // Uncomment the two lines below for easy development AFTER you've created a team once.
-        /*
-        const firstTeam = LEAGUE_DATA.fantasyTeams[0];
-        if(firstTeam) {
-           currentUserName = firstTeam.name;
-           loginSuccess(false);
-        }
-        */
-
-    </script>
 </body>
 </html>
