@@ -1,0 +1,671 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Ryder Cup 2025 Fantasy League&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* CSS Styling */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f4f7f6;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#app {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 900px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 8px rgba(0,0,0,0.1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #00468C; /* USA Blue */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 3px solid #FFCD00; /* Europe Yellow */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.section-title {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #1A3E5C;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid #eee;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 25px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.2em;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Login and Setup Form */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#login-screen, #setup-screen {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ddd;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-control {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-control label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.form-control input, .form-control select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ccc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.submit-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #00468C;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: background-color 0.3s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.submit-btn:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #003366;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Leaderboard */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#leaderboard table {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-collapse: collapse;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#leaderboard th, #leaderboard td {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: left;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid #ddd;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#leaderboard th {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f0f0f0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#leaderboard tr:nth-child(even) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #fafafa;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.overall-winner-pick {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.usa-color { color: #00468C; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.eur-color { color: #FFCD00; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Team Roster View */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.player-list {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>list-style: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.player-item {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 8px 12px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.9em;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex: 1 1 45%; /* Allows 2 per row */</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 1px 3px rgba(0,0,0,0.05);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.player-usa { border: 1px solid #00468C; background-color: #e6f0ff; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.player-eur { border: 1px solid #FFCD00; background-color: #fffbe6; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Admin/Match Input (Hidden by default) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#admin-panel {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #eafaea;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #ccc;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 30px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>#admin-panel label {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.admin-result-input {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.player-select {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.hide {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: none !important;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="app"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;Ryder Cup 2025 Fantasy League&lt;/h1&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="login-screen"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title"&gt;Welcome to the Fantasy League!&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="login-name"&gt;Your Login Name (e.g., Mike, Sarah):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="text" id="login-name" placeholder="Enter your name" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="league-code"&gt;League Code:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;input type="password" id="league-code" placeholder="Enter the secret code" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="submit-btn" onclick="handleLogin()"&gt;Login / Join League&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="login-error" style="color: red; margin-top: 10px;"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="setup-screen" class="hide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title"&gt;Team Setup: &lt;span id="setup-user-name"&gt;&lt;/span&gt;&lt;/h2&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="overall-pick"&gt;Overall Winner Pick (Bonus +15 Points):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select id="overall-pick" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value=""&gt;-- Select Winner --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="USA"&gt;USA&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;option value="EUR"&gt;Europe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label&gt;Select Your 5 Players (Any mix, max 5 total):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div id="player-selection-list" style="max-height: 250px; overflow-y: auto; text-align: left; border: 1px solid #ddd; padding: 10px; border-radius: 4px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="day-winner-friday"&gt;Friday Day Winner (Double Points):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select id="day-winner-friday" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="day-winner-saturday"&gt;Saturday Day Winner (Double Points):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select id="day-winner-saturday" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;label for="day-winner-sunday"&gt;Sunday Day Winner (Double Points):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;select id="day-winner-sunday" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="submit-btn" onclick="saveTeamSetup()"&gt;Lock In My Team&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p id="setup-error" style="color: red; margin-top: 10px;"&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="main-view" class="hide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title"&gt;Current Standings&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="leaderboard"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title"&gt;My Team (&lt;span id="my-team-name"&gt;&lt;/span&gt; - Pick: &lt;span id="my-overall-pick" class="overall-winner-pick"&gt;&lt;/span&gt;)&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;ul id="my-roster-list" class="player-list"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/ul&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title"&gt;Day Winner Selections&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;&lt;strong&gt;Friday:&lt;/strong&gt; &lt;span id="day-winner-friday-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;&lt;strong&gt;Saturday:&lt;/strong&gt; &lt;span id="day-winner-saturday-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;&lt;strong&gt;Sunday:&lt;/strong&gt; &lt;span id="day-winner-sunday-display"&gt;&lt;/span&gt;&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="admin-panel" class="hide"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="section-title" style="color: #c0392b;"&gt;Commissioner Panel (Admin)&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="submit-btn" style="background-color: #2c3e50;" onclick="showHideAdmin()"&gt;Toggle Admin Input&lt;/button&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="admin-input-area" class="hide" style="padding: 10px; border-top: 1px solid #ccc; margin-top: 10px;"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 style="margin-top: 0;"&gt;Enter Match Result&lt;/h3&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="match-day-select"&gt;Day:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select id="match-day-select"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="Friday"&gt;Friday&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="Saturday"&gt;Saturday&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="Sunday"&gt;Sunday&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="match-winner-select"&gt;Winning Team:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select id="match-winner-select"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="USA"&gt;USA&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="EUR"&gt;Europe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="TIE"&gt;Halve (Tie)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="match-margin-select"&gt;Result Margin (for Decisive Bonus):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select id="match-margin-select"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="4&amp;3+"&gt;4&amp;3 or greater (Decisive +1pt)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="standard"&gt;Standard (e.g., 1UP, 2&amp;1, Halve)&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label&gt;Players Involved (Input all 4/2 players):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p style="font-size: 0.8em; color: #555;"&gt;Use player IDs from the `fantasy_data.js` file (e.g., 'sscheffler'). Separate IDs with commas.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea id="player-ids-input" rows="3" style="width: 100%;" placeholder="e.g., sscheffler, xschauffele, rmcilroy, jrahm"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="total-birdies-input"&gt;Total Birdies/Eagles for Match (Sum of all 4/2 players):&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;input type="number" id="total-birdies-input" value="0" min="0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="submit-btn" style="background-color: #c0392b;" onclick="submitMatchResult()"&gt;Submit Match Result &amp; Update Scores&lt;/button&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h3 style="margin-top: 20px;"&gt;Final Overall Winner&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="form-control"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label for="final-winner-select"&gt;Ryder Cup Winner:&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;select id="final-winner-select"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value=""&gt;-- Not Decided --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="USA"&gt;USA&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;option value="EUR"&gt;Europe&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="submit-btn" style="background-color: green;" onclick="setOverallWinner()"&gt;Finalize Winner &amp; Award Bonus&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="fantasy_data.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Global Variables (Simulating Storage) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// In a real deployed app, this would be an AJAX call to load the JSON file.</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// For this demo, we use the variables defined in fantasy_data.js</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let currentUserName = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const COMMISSIONER_CODE = LEAGUE_DATA.leagueCode + '-ADMIN'; // A secret admin code</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Utility Functions ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Simulates saving/loading the LEAGUE_DATA object to "storage" (localStorage) */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function saveData() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>localStorage.setItem('fantasyLeagueData', JSON.stringify(LEAGUE_DATA));</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function loadData() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const savedData = localStorage.getItem('fantasyLeagueData');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (savedData) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Merge loaded data over the initial structure</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Object.assign(LEAGUE_DATA, JSON.parse(savedData));</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Re-initialize playerScores in case a new player was added to PLAYERS array</p>
+<p class="p1"><span class="Apple-converted-space">                </span>for (const player of PLAYERS) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (!LEAGUE_DATA.playerScores[player.id]) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>LEAGUE_DATA.playerScores[player.id] = { total: 0, Friday: 0, Saturday: 0, Sunday: 0, birdies: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Gets a player object by their ID */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function getPlayerById(id) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return PLAYERS.find(p =&gt; p.id === id);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- CORE APPLICATION LOGIC ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Handles the initial login/entry screen. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function handleLogin() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>loadData();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const name = document.getElementById('login-name').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const code = document.getElementById('league-code').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const errorElement = document.getElementById('login-error');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>errorElement.textContent = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!name || !code) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorElement.textContent = 'Please enter both a name and the league code.';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (code === COMMISSIONER_CODE) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Special login for the Commissioner</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('login-screen').classList.add('hide');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('main-view').classList.remove('hide');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('admin-panel').classList.remove('hide');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>renderMainView(name);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (code !== LEAGUE_DATA.leagueCode) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorElement.textContent = 'Invalid league code.';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentUserName = name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const existingTeam = LEAGUE_DATA.fantasyTeams.find(t =&gt; t.name === name);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('login-screen').classList.add('hide');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (existingTeam) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Existing user: go straight to the main view</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('main-view').classList.remove('hide');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>renderMainView(name);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// New user: go to setup screen</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('setup-screen').classList.remove('hide');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>initializeSetupScreen(name);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Initializes the player and day winner lists on the setup screen. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function initializeSetupScreen(name) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('setup-user-name').textContent = name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const playerList = document.getElementById('player-selection-list');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dayWinnerSelects = [</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('day-winner-friday'),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('day-winner-saturday'),</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('day-winner-sunday')</p>
+<p class="p1"><span class="Apple-converted-space">            </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>playerList.innerHTML = '';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const playerOptions = '&lt;option value=""&gt;-- Select Player --&lt;/option&gt;' + PLAYERS.map(p =&gt;<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>`&lt;option value="${p.id}"&gt;${p.name} (${p.team})&lt;/option&gt;`</p>
+<p class="p1"><span class="Apple-converted-space">            </span>).join('');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>dayWinnerSelects.forEach(select =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>select.innerHTML = playerOptions;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Create checkboxes for player selection</p>
+<p class="p1"><span class="Apple-converted-space">            </span>PLAYERS.forEach(player =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const label = document.createElement('label');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>label.innerHTML = `&lt;input type="checkbox" name="player-roster" value="${player.id}"&gt; ${player.name} (${player.team})&lt;br&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>playerList.appendChild(label);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Saves a new fantasy team to the LEAGUE_DATA and moves to main view. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function saveTeamSetup() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const overallPick = document.getElementById('overall-pick').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const rosterChecks = Array.from(document.querySelectorAll('#player-selection-list input[name="player-roster"]:checked'));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const roster = rosterChecks.map(cb =&gt; cb.value);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dayWinners = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'Friday': document.getElementById('day-winner-friday').value,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'Saturday': document.getElementById('day-winner-saturday').value,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>'Sunday': document.getElementById('day-winner-sunday').value</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const errorElement = document.getElementById('setup-error');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>errorElement.textContent = '';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (overallPick === '') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorElement.textContent = 'Please select your overall winner pick.';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (roster.length !== 5) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorElement.textContent = `You must select exactly 5 players. You currently have ${roster.length}.`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (Object.values(dayWinners).includes('')) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>errorElement.textContent = 'Please select a Day Winner for all three days.';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (roster.some(p =&gt; !Object.values(dayWinners).includes(p))) {</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>errorElement.textContent = 'All Day Winners must be selected from your 5-player roster.';</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Success: Create the new team object</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const newTeam = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name: currentUserName,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>overallPick: overallPick,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>roster: roster,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dayWinners: dayWinners,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>totalPoints: 0</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>LEAGUE_DATA.fantasyTeams.push(newTeam);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>saveData();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('setup-screen').classList.add('hide');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('main-view').classList.remove('hide');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderMainView(currentUserName);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Renders the main leaderboard and the user's team details. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function renderMainView(name) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>currentUserName = name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const myTeam = LEAGUE_DATA.fantasyTeams.find(t =&gt; t.name === name);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!myTeam) return;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// --- Update My Team Info ---</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('my-team-name').textContent = myTeam.name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('my-overall-pick').textContent = myTeam.overallPick;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('my-overall-pick').className = `overall-winner-pick ${myTeam.overallPick === 'USA' ? 'usa-color' : 'eur-color'}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('day-winner-friday-display').textContent = getPlayerById(myTeam.dayWinners.Friday).name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('day-winner-saturday-display').textContent = getPlayerById(myTeam.dayWinners.Saturday).name;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('day-winner-sunday-display').textContent = getPlayerById(myTeam.dayWinners.Sunday).name;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const rosterList = document.getElementById('my-roster-list');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>rosterList.innerHTML = myTeam.roster.map(id =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const player = getPlayerById(id);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const score = LEAGUE_DATA.playerScores[id];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const teamClass = player.team === 'USA' ? 'player-usa' : 'player-eur';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return `&lt;li class="player-item ${teamClass}"&gt;${player.name} (${player.team}) - Pts: ${score.total.toFixed(2)}&lt;/li&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}).join('');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// --- Render Leaderboard ---</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Recalculate all scores before rendering</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculateAllFantasyScores();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sortedTeams = [...LEAGUE_DATA.fantasyTeams].sort((a, b) =&gt; b.totalPoints - a.totalPoints);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const leaderboardTable = document.createElement('table');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>leaderboardTable.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Rank&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Team Name&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Total Points&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Overall Pick&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>${sortedTeams.map((team, index) =&gt; `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;td&gt;${index + 1}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;td&gt;${team.name}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;td&gt;${team.totalPoints.toFixed(2)}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;td class="${team.overallPick === 'USA' ? 'usa-color' : 'eur-color'}"&gt;${team.overallPick}&lt;/td&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>`).join('')}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('leaderboard').innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('leaderboard').appendChild(leaderboardTable);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- SCORING &amp; ADMIN LOGIC ---</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Toggles the visibility of the admin input section. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function showHideAdmin() {</p>
+<p class="p1"><span class="Apple-converted-space">             </span>document.getElementById('admin-input-area').classList.toggle('hide');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Recalculates all player scores based on match results and updates fantasy team totals. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function calculateAllFantasyScores() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Reset all scores</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (const id in LEAGUE_DATA.playerScores) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>LEAGUE_DATA.playerScores[id] = { total: 0, Friday: 0, Saturday: 0, Sunday: 0, birdies: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const DAYS = ['Friday', 'Saturday', 'Sunday'];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 2. Process all Match Results</p>
+<p class="p1"><span class="Apple-converted-space">            </span>DAYS.forEach(day =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>LEAGUE_DATA.matchResults[day].forEach(match =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const isSingles = day === 'Sunday';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const winPoints = isSingles ? SCORING_RULES.SINGLES_MATCH_WIN : SCORING_RULES.TEAM_MATCH_WIN;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const halvePoints = isSingles ? SCORING_RULES.SINGLES_MATCH_HALVE : SCORING_RULES.TEAM_MATCH_HALVE;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const bonusPoints = match.margin === '4&amp;3+' ? SCORING_RULES.DECISIVE_WIN_BONUS : 0;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const birdiePoints = match.totalBirdies * SCORING_RULES.BIRDIE_BONUS;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Total points from this match *before* the Day Winner multiplier</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const matchPoints = match.winner === 'TIE' ? halvePoints : winPoints;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>// Award points to the players involved</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>match.players.forEach(pID =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let pointsAwarded = 0;</p>
+<p class="p2"><span class="Apple-converted-space">                        </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if (match.winner === 'TIE') {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointsAwarded = halvePoints;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>} else if (match.winnerIDs.includes(pID)) {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>pointsAwarded = winPoints;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>// Add individual bonuses for all players involved</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointsAwarded += bonusPoints;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>pointsAwarded += birdiePoints;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>// Update the player's daily score</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>LEAGUE_DATA.playerScores[pID][day] += pointsAwarded;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>LEAGUE_DATA.playerScores[pID].total += pointsAwarded;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>LEAGUE_DATA.playerScores[pID].birdies += match.totalBirdies;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 3. Apply Day Winner Multiplier and Calculate Final Team Scores</p>
+<p class="p1"><span class="Apple-converted-space">            </span>LEAGUE_DATA.fantasyTeams.forEach(team =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let teamTotal = 0;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 3a. Player Scores</p>
+<p class="p1"><span class="Apple-converted-space">                </span>team.roster.forEach(pID =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const score = LEAGUE_DATA.playerScores[pID];</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>let playerDayScore = 0;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>DAYS.forEach(day =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let dayScore = score[day];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>// Apply Day Winner Multiplier</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>if (team.dayWinners[day] === pID) {</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>dayScore *= SCORING_RULES.DAILY_WINNER_MULTIPLIER;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>playerDayScore += dayScore;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>teamTotal += playerDayScore;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// 3b. Overall Winner Bonus</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (LEAGUE_DATA.overallWinner === team.overallPick) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>teamTotal += SCORING_RULES.OVERALL_WINNER_BONUS;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>team.totalPoints = teamTotal;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>saveData();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Admin function to submit a single match result. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function submitMatchResult() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const day = document.getElementById('match-day-select').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const winner = document.getElementById('match-winner-select').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const margin = document.getElementById('match-margin-select').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const playerIDsInput = document.getElementById('player-ids-input').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const totalBirdies = parseInt(document.getElementById('total-birdies-input').value) || 0;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const players = playerIDsInput.split(',').map(id =&gt; id.trim());</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (players.length === 0 || (day !== 'Sunday' &amp;&amp; players.length !== 4) || (day === 'Sunday' &amp;&amp; players.length !== 2)) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert(`Error: On ${day}, you must input ${day === 'Sunday' ? '2 (Singles)' : '4 (Foursomes/Four-ball)'} players.`);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Determine the winner/loser IDs</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let winnerIDs = [];</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let loserIDs = [];</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (winner !== 'TIE') {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const winningTeam = winner;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const losingTeam = winningTeam === 'USA' ? 'EUR' : 'USA';</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>winnerIDs = players.filter(pID =&gt; getPlayerById(pID).team === winningTeam);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loserIDs = players.filter(pID =&gt; getPlayerById(pID).team === losingTeam);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (winnerIDs.length === 0 || loserIDs.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>alert('Error: Winner/Loser determination failed. Check the player IDs and the winning team selection.');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Halve - everyone is involved</p>
+<p class="p1"><span class="Apple-converted-space">                </span>winnerIDs = players;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loserIDs = players; // Not strictly losers, but for logic consistency</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const newMatch = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>match: `${day} Match ${LEAGUE_DATA.matchResults[day].length + 1}`,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>players: players,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>winner: winner,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>margin: margin,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>winnerIDs: winnerIDs,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>loserIDs: loserIDs,</p>
+<p class="p1"><span class="Apple-converted-space">                </span>totalBirdies: totalBirdies</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>LEAGUE_DATA.matchResults[day].push(newMatch);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Recalculate all scores and re-render the view</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculateAllFantasyScores();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderMainView(currentUserName);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>alert(`Match result submitted successfully for ${newMatch.match}. Scores updated!`);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('player-ids-input').value = ''; // Clear for next input</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('total-birdies-input').value = '0';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/** Admin function to finalize the overall Ryder Cup Winner. */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function setOverallWinner() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const finalWinner = document.getElementById('final-winner-select').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!finalWinner) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert('Please select the overall Ryder Cup winner before finalizing.');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>LEAGUE_DATA.overallWinner = finalWinner;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Recalculate scores to award the bonus points</p>
+<p class="p1"><span class="Apple-converted-space">            </span>calculateAllFantasyScores();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>renderMainView(currentUserName);</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>alert(`Overall Ryder Cup Winner finalized as ${finalWinner}. +${SCORING_RULES.OVERALL_WINNER_BONUS} point bonus awarded to correct picks!`);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Initial Load ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.onload = function() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>loadData();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Initial Data Population for playerScores (if loaded first) ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>for (const player of PLAYERS) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!LEAGUE_DATA.playerScores[player.id]) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>LEAGUE_DATA.playerScores[player.id] = { total: 0, Friday: 0, Saturday: 0, Sunday: 0, birdies: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
