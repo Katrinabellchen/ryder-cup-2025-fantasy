@@ -1,85 +1,136 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2822
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+/*
+* fantasy_data.js
+*
+* This file holds all the persistent data for the Fantasy League application.
+* NOTE: In a real-world application, this data would be stored in a database
+* and accessed via an API, but for this standalone HTML/JS project, we use 
+* a global JavaScript object.
+*
+* The data structure mirrors the last version we discussed.
+*/
 
-\f0\fs24 \cf0 /* fantasy_data.js */\
-\
-// --- SCORING RULES (As Agreed) ---\
-const SCORING_RULES = \{\
-    // Points for Foursomes/Four-ball (Day 1 & 2)\
-    TEAM_MATCH_WIN: 2.0,\
-    TEAM_MATCH_HALVE: 1.0,\
-    // Points for Singles (Day 3)\
-    SINGLES_MATCH_WIN: 3.0,\
-    SINGLES_MATCH_HALVE: 1.5,\
-    // Individual Stat Bonus (All Days)\
-    BIRDIE_BONUS: 0.25, // Placeholder for data entry; requires manual tracking/input\
-    DECISIVE_WIN_BONUS: 1.0, // For a win 4&3 or greater\
-    // Final Bonuses\
-    OVERALL_WINNER_BONUS: 15.0,\
-    DAILY_WINNER_MULTIPLIER: 2.0 // Multiplies player's points for that day\
-\};\
-\
-// --- INITIAL PLAYER LIST ---\
-// Using predicted/current top players for demonstration. You will update this.\
-const PLAYERS = [\
-    // Team USA\
-    \{ id: 'sscheffler', name: 'Scottie Scheffler', team: 'USA', birdies: 0, points: 0 \},\
-    \{ id: 'xschauffele', name: 'Xander Schauffele', team: 'USA', birdies: 0, points: 0 \},\
-    \{ id: 'jthomas', name: 'Justin Thomas', team: 'USA', birdies: 0, points: 0 \},\
-    \{ id: 'pcantlay', name: 'Patrick Cantlay', team: 'USA', birdies: 0, points: 0 \},\
-    \{ id: 'bdechambeau', name: 'B. DeChambeau', team: 'USA', birdies: 0, points: 0 \},\
-    \{ id: 'cmorikawa', name: 'Collin Morikawa', team: 'USA', birdies: 0, points: 0 \},\
-    // Team Europe\
-    \{ id: 'rmcilroy', name: 'Rory McIlroy', team: 'EUR', birdies: 0, points: 0 \},\
-    \{ id: 'jrahm', name: 'Jon Rahm', team: 'EUR', birdies: 0, points: 0 \},\
-    \{ id: 'vhovland', name: 'Viktor Hovland', team: 'EUR', birdies: 0, points: 0 \},\
-    \{ id: 'tfleetwood', name: 'Tommy Fleetwood', team: 'EUR', birdies: 0, points: 0 \},\
-    \{ id: 'thatton', name: 'Tyrrell Hatton', team: 'EUR', birdies: 0, points: 0 \},\
-    \{ id: 'lrory', name: 'Ludvig \'c5berg', team: 'EUR', birdies: 0, points: 0 \},\
-];\
-\
-// --- LEAGUE DATA (The "Database") ---\
-// This will be stored and updated by the Commissioner Input Page.\
-// For the initial build, this is the starting state:\
-\
-const LEAGUE_DATA = \{\
-    leagueCode: 'RYDER2025', // The shared secret code for entry\
-    overallWinner: null, // 'USA', 'EUR', or null until decided\
-    \
-    // FANTASY TEAMS (Initial structure, will be populated on first entry)\
-    fantasyTeams: [\
-        // Example structure for a team:\
-        // \{\
-        //     name: "Fantasy Name",\
-        //     overallPick: "USA", // "USA" or "EUR"\
-        //     roster: ['sscheffler', 'jthomas', 'rmcilroy', 'vhovland', 'tfleetwood'], // Player IDs\
-        //     dayWinners: \{\
-        //         'Friday': 'sscheffler',\
-        //         'Saturday': 'rmcilroy',\
-        //         'Sunday': null\
-        //     \},\
-        //     totalPoints: 0\
-        // \}\
-    ],\
-    \
-    // MATCH RESULTS (Admin will update this)\
-    matchResults: \{\
-        'Friday': [\
-            // Example match result structure:\
-            // \{ match: 'Foursomes 1', players: ['sscheffler', 'xschauffele', 'rmcilroy', 'jrahm'], winner: 'USA', margin: '4&3', winnerIDs: ['sscheffler', 'xschauffele'], loserIDs: ['rmcilroy', 'jrahm'] \}\
-        ],\
-        'Saturday': [],\
-        'Sunday': []\
-    \},\
-    \
-    // PLAYER SCORING TRACKER (To track individual points per day)\
-    playerScores: \{\
-        'sscheffler': \{ total: 0, Friday: 0, Saturday: 0, Sunday: 0, birdies: 0 \},\
-        'xschauffele': \{ total: 0, Friday: 0, Saturday: 0, Sunday: 0, birdies: 0 \},\
-        // ... all other players\
-    \}\
-\};}
+// --- SCORING RULES (As Agreed) ---
+// Define how points are awarded for different match outcomes
+const SCORING_RULES = {
+    // Match Points
+    TEAM_MATCH_WIN: 2.0,      // Foursomes/Four-ball Win
+    TEAM_MATCH_HALVE: 1.0,    // Foursomes/Four-ball Halve
+    SINGLES_MATCH_WIN: 3.0,   // Singles Match Win
+    SINGLES_MATCH_HALVE: 1.5, // Singles Match Halve
+    
+    // Bonus Points
+    BIRDIE_BONUS: 0.25,       // Bonus for each Birdie a player makes
+    DECISIVE_WIN_BONUS: 1.0,  // For a match win 4&3 or greater
+    
+    // Final Prizes
+    OVERALL_WINNER_BONUS: 15.0,     // Bonus points for correctly picking the overall Ryder Cup winner
+    DAILY_WINNER_MULTIPLIER: 2.0    // Multiplies player's points if they are the chosen Daily Winner for that day
+};
+
+
+// --- INITIAL PLAYER LIST ---
+// The full roster of players for the Ryder Cup.
+const PLAYERS = [
+    // Team USA (Using common IDs for simplicity)
+    { id: 'sscheffler', name: 'Scottie Scheffler', team: 'USA', birdies: 0, points: 0 },
+    { id: 'xschauffele', name: 'Xander Schauffele', team: 'USA', birdies: 0, points: 0 },
+    { id: 'jthomas', name: 'Justin Thomas', team: 'USA', birdies: 0, points: 0 },
+    { id: 'pcantlay', name: 'Patrick Cantlay', team: 'USA', birdies: 0, points: 0 },
+    { id: 'homa', name: 'Max Homa', team: 'USA', birdies: 0, points: 0 },
+    { id: 'cmorikawa', name: 'Collin Morikawa', team: 'USA', birdies: 0, points: 0 },
+    // You can add the full 12-man roster here...
+
+    // Team Europe
+    { id: 'rmcilroy', name: 'Rory McIlroy', team: 'EUR', birdies: 0, points: 0 },
+    { id: 'jrahm', name: 'Jon Rahm', team: 'EUR', birdies: 0, points: 0 },
+    { id: 'vhovland', name: 'Viktor Hovland', team: 'EUR', birdies: 0, points: 0 },
+    { id: 'tfleetwood', name: 'Tommy Fleetwood', team: 'EUR', birdies: 0, points: 0 },
+    { id: 'thatton', name: 'Tyrrell Hatton', team: 'EUR', birdies: 0, points: 0 },
+    { id: 'laberg', name: 'Ludvig Åberg', team: 'EUR', birdies: 0, points: 0 },
+    // You can add the full 12-man roster here...
+];
+
+
+// --- LEAGUE DATA (The "Database") ---
+// This object holds all the dynamic data about the league.
+const LEAGUE_DATA = {
+    
+    // The shared secret code for entry by all players.
+    leagueCode: 'RYDER2025', 
+    
+    // The eventual overall winner ('USA', 'EUR', or null)
+    overallWinner: null, 
+    
+    // FANTASY TEAMS: Array to store all submitted fantasy teams.
+    // This starts empty and is populated when new players join.
+    fantasyTeams: [
+        // Example structure for a submitted team (will not be in the initial file):
+        /*
+        {
+            name: "Fantasy Champion",
+            overallPick: "USA", // "USA" or "EUR"
+            roster: ['sscheffler', 'pcantlay', 'rmcilroy', 'vhovland', 'tfleetwood'], // 5 Player IDs
+            dayWinners: {
+                'Friday': 'USA',
+                'Saturday': 'EUR',
+                'Sunday': null
+            },
+            totalPoints: 0
+        }
+        */
+    ],
+    
+    // MATCH RESULTS: Nested object to store official match results (updated by Admin).
+    matchResults: {
+        'Friday': [
+            // Example match result structure (will not be in the initial file):
+            /*
+            { 
+                match: 'Foursomes 1', 
+                players: ['sscheffler', 'xschauffele', 'rmcilroy', 'jrahm'], 
+                winner: 'USA', 
+                margin: '4&3', // Used for Decisive Win Bonus
+                winnerIDs: ['sscheffler', 'xschauffele'], 
+                loserIDs: ['rmcilroy', 'jrahm'] 
+            }
+            */
+        ],
+        'Saturday': [],
+        'Sunday': []
+    },
+    
+    // PLAYER SCORING TRACKER: Object to track individual player points per day.
+    // This ensures that even if a player is on multiple fantasy teams, their performance is tracked once.
+    playerScores: {
+        // Initial structure for each player (will be generated by the script on first run):
+        /*
+        'sscheffler': { 
+            total: 0, 
+            Friday: 0, 
+            Saturday: 0, 
+            Sunday: 0, 
+            birdies: 0 
+        },
+        // ... all other players
+        */
+    }
+};
+
+
+// --- INITIALIZATION ---
+
+// A simple function to generate the initial playerScores structure based on the PLAYERS array
+// This prevents having to manually type out all 24 players above.
+(function initializePlayerScores() {
+    if (Object.keys(LEAGUE_DATA.playerScores).length === 0) {
+        PLAYERS.forEach(player => {
+            LEAGUE_DATA.playerScores[player.id] = { 
+                total: 0, 
+                Friday: 0, 
+                Saturday: 0, 
+                Sunday: 0, 
+                birdies: 0 
+            };
+        });
+    }
+})();
